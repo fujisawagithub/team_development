@@ -1,6 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_team, only: %i[show edit update destroy assignment_of_authority] 
+  before_action :set_team, only: %i[show edit update destroy assignment_of_authority]
 
   def index
     @teams = Team.all
@@ -16,9 +16,7 @@ class TeamsController < ApplicationController
   end
 
   def edit
-    if @team.owner.id != current_user.id
-      redirect_to team_url, notice: I18n.t('views.messages.owner_authority')
-    end
+    redirect_to team_url, notice: I18n.t('views.messages.owner_authority') if @team.owner.id != current_user.id
   end
 
   def create
